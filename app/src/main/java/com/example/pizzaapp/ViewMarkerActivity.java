@@ -43,7 +43,7 @@ public class ViewMarkerActivity extends AppCompatActivity implements Updatable {
         editContent = findViewById(R.id.editContent);
         editContent.setText(Repository.getCurrentMarker().getContent());
         imageView = findViewById(R.id.imageView);
-        Repository.downloadBitmapForCurrentNote(this);
+        Repository.downloadBitmapForCurrentMarker(this);
         setupGalleryLauncher();
         setupCameraLauncher();
     }
@@ -106,18 +106,18 @@ public class ViewMarkerActivity extends AppCompatActivity implements Updatable {
 
     public void saveButtonPressed(View view) {
         Repository.updateMarker(editName.getText().toString(), editContent.getText().toString());
-        Toast.makeText(this, "Note has been saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Marker has been saved", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void update(Object o) {
-        //Bitmap er blevet downloaded og gemt i currentNote hos Repo
+        //Bitmap er blevet downloaded og gemt i currentMarker hos Repo
         imageView.setImageBitmap(Repository.getCurrentMarker().getBitmap());
     }
 
     public void deleteButtonPressed(View view) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you would like to delete the note?")
+        builder.setMessage("Are you sure you would like to delete the marker?")
                 .setCancelable(true)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

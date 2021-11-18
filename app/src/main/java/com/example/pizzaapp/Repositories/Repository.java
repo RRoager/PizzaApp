@@ -44,9 +44,9 @@ public class Repository {
         DocumentReference ref =  db.collection("markers").document(uuid.toString());
         Marker marker = new Marker(uuid.toString(), name, content, new GeoPoint(lat, lng));
         ref.set(marker).addOnCompleteListener(obj -> {
-            System.out.println("added new note");
+            System.out.println("added new marker");
         }).addOnFailureListener(exception -> {
-            System.out.println("Failed to add new note " + exception);
+            System.out.println("Failed to add new marker " + exception);
         });
     }
 
@@ -93,12 +93,12 @@ public class Repository {
         map.put("title", currentMarker.getName());
         map.put("content", currentMarker.getContent());
         if(currentMarker.hasNewImage()) {
-            uploadBitmapToCurrentNote(currentMarker.getBitmap());
+            uploadBitmapToCurrentMarker(currentMarker.getBitmap());
         }
         ref.set(map).addOnCompleteListener(obj -> {
-            System.out.println("updated note");
+            System.out.println("updated marker");
         }).addOnFailureListener(exception -> {
-            System.out.println("Failed to update note " + exception);
+            System.out.println("Failed to update marker " + exception);
         });
     }
 
@@ -107,7 +107,7 @@ public class Repository {
         db.collection("marker").document(currentMarker.getId()).delete();
     }
 
-    public static void uploadBitmapToCurrentNote(Bitmap bitmap) {
+    public static void uploadBitmapToCurrentMarker(Bitmap bitmap) {
         StorageReference ref = storage.getReference(currentMarker.getId()); // new reference
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -118,7 +118,7 @@ public class Repository {
         });
     }
 
-    public static void downloadBitmapForCurrentNote(Updatable caller) {
+    public static void downloadBitmapForCurrentMarker(Updatable caller) {
         StorageReference ref = storage.getReference(currentMarker.getId());
         int max = 1024 * 1024;
         ref.getBytes(max).addOnSuccessListener(bytes -> {
