@@ -79,6 +79,9 @@ public class Repository {
         return currentMarker;
     }
 
+    /* TODO fix IndexOutOfBoundsException når der laves en ny marker og den tilgåes,
+        det er noget med det index der bliver sendt med fra MapsActivity
+    */
     public static void setCurrentMarker(int index) {
         Repository.currentMarker = markers.get(index);
     }
