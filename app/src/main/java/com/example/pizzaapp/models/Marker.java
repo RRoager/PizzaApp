@@ -13,12 +13,6 @@ public class Marker {
     private Bitmap bitmap;
     private boolean hasNewImage = false;
 
-    public Marker(String name, String content, GeoPoint geoPoint) {
-        this.name = name;
-        this.content = content;
-        this.geoPoint = geoPoint;
-    }
-
     public Marker(String id, String name, String content, GeoPoint geoPoint) {
         this.id = id;
         this.name = name;
