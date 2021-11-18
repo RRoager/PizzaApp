@@ -41,7 +41,7 @@ public class Repository {
     }
 
     public static void uploadMarker(String name, String content, double lat, double lng) {
-        DocumentReference ref =  db.collection("markers").document(uuid.toString());
+        DocumentReference ref = db.collection("markers").document(uuid.toString());
         Marker marker = new Marker(uuid.toString(), name, content, new GeoPoint(lat, lng));
         ref.set(marker).addOnCompleteListener(obj -> {
             System.out.println("Added new marker");
@@ -102,6 +102,7 @@ public class Repository {
     }
 
     public static void deleteMarker() {
+        System.out.println("Det er denne der skal deletes: " + currentMarker.getId());
         storage.getReference(currentMarker.getId()).delete();
         db.collection("marker").document(currentMarker.getId()).delete();
     }
