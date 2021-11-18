@@ -38,7 +38,7 @@ public class ViewMarkerActivity extends AppCompatActivity implements Updatable {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_marker);
-        editName = findViewById(R.id.editText);
+        editName = findViewById(R.id.editName);
         editName.setText(Repository.getCurrentMarker().getName());
         editContent = findViewById(R.id.editContent);
         editContent.setText(Repository.getCurrentMarker().getContent());

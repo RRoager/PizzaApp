@@ -112,7 +112,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(@NonNull Marker marker) {
-                // TODO Få sendt marker id med 
+                // TODO Få sendt marker id med
                 String i = marker.getId();
                 Repository.getCurrentMarker();
                 Intent intent = new Intent(MapsActivity.this, ViewMarkerActivity.class);

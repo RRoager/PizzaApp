@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#DCEDD8"
-    android:backgroundTint="#DCEDD8"
+    android:backgroundTint="#EDEAD8"
     tools:context=".ViewMarkerActivity">
 
     <EditText
@@ -36,7 +36,7 @@
         android:textColor="#AE000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText"
+        app:layout_constraintTop_toBottomOf="@+id/editName"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <ImageView
@@ -55,7 +55,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:backgroundTint="#43A047"
+        android:backgroundTint="#b17c00"
         android:contentDescription="TODO"
         android:onClick="photoChoice"
         android:src="@drawable/ic_photo"
@@ -68,7 +68,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:backgroundTint="#43A047"
+        android:backgroundTint="#b17c00"
         android:contentDescription="TODO"
         android:onClick="saveButtonPressed"
         android:src="@drawable/ic_save"
@@ -81,7 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:backgroundTint="#43A047"
+        android:backgroundTint="#b17c00"
         android:contentDescription="TODO"
         android:onClick="deleteButtonPressed"
         android:src="@drawable/ic_delete"
