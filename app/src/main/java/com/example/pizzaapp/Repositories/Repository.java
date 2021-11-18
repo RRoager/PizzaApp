@@ -100,9 +100,8 @@ public class Repository {
     }
 
     public static void deleteMarker() {
-        System.out.println("Det er denne der skal deletes: " + currentMarker.getId());
         storage.getReference(currentMarker.getId()).delete();
-        db.collection("marker").document(currentMarker.getId()).delete();
+        db.collection("markers").document(currentMarker.getId()).delete();
     }
 
     public static void uploadBitmapToCurrentMarker(Bitmap bitmap) {
