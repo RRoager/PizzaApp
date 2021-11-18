@@ -75,12 +75,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
-    public void onResume(){
-        super.onResume();
-        Repository.downloadMarker(mGoogleMap);
-    }
-
-    @Override
     public void onMapReady(@NonNull GoogleMap googleMap) {
         mGoogleMap = googleMap;
 

@@ -42,7 +42,7 @@ public class Repository {
         DocumentReference ref = db.collection("markers").document(uuid.toString());
         Marker marker = new Marker(uuid.toString(), name, content, new GeoPoint(lat, lng));
         ref.set(marker).addOnCompleteListener(obj -> {
-            System.out.println("Added new marker");
+            System.out.println("Added new marker: " + marker.getId());
         }).addOnFailureListener(exception -> {
             System.out.println("Failed to add new marker " + exception);
         });
@@ -79,6 +79,7 @@ public class Repository {
         return currentMarker;
     }
 
+
     /* TODO fix IndexOutOfBoundsException når der laves en ny marker og den tilgåes,
         det er noget med det index der bliver sendt med fra MapsActivity */
     public static void setCurrentMarker(int index) {
@@ -95,7 +96,7 @@ public class Repository {
         }
         // ref.update only updates the mentioned field, were as ref.set removes everything not mentioned
         ref.update("name", currentMarker.getName(), "content", currentMarker.getContent()).addOnCompleteListener(obj -> {
-            System.out.println("Updated marker");
+            System.out.println("Updated marker: " + currentMarker.getId());
         }).addOnFailureListener(exception -> {
             System.out.println("Failed to update marker " + exception);
         });
@@ -104,6 +105,7 @@ public class Repository {
     public static void deleteMarker() {
         storage.getReference(currentMarker.getId()).delete();
         db.collection("markers").document(currentMarker.getId()).delete();
+        System.out.println("Deleted marker: " + currentMarker.getId());
     }
 
     public static void uploadBitmapToCurrentMarker(Bitmap bitmap) {
