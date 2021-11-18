@@ -48,20 +48,9 @@ public class ViewMarkerActivity extends AppCompatActivity implements Updatable {
         editContent = (EditText) findViewById(R.id.editContent);
         editContent.setText(Repository.getCurrentMarker().getContent());
         imageView = (ImageView) findViewById(R.id.imageView);
-        //Repository.downloadBitmapForCurrentMarker(this);
+        Repository.downloadBitmapForCurrentMarker(this);
         setupGalleryLauncher();
         setupCameraLauncher();
-
-        saveButton = findViewById(R.id.saveButton);
-
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Repository.updateMarker(editName.getText().toString(), editContent.getText().toString());
-                //Toast.makeText(this, "Marker has been saved", Toast.LENGTH_SHORT).show();
-            }
-        });
-
     }
 
     private void setupGalleryLauncher() {
@@ -120,12 +109,10 @@ public class ViewMarkerActivity extends AppCompatActivity implements Updatable {
         cameraLauncher.launch(intent);
     }
 
-    /*
     public void saveButtonPressed(View view) {
         Repository.updateMarker(editName.getText().toString(), editContent.getText().toString());
         Toast.makeText(this, "Marker has been saved", Toast.LENGTH_SHORT).show();
     }
-    */
 
     @Override
     public void update(Object o) {
