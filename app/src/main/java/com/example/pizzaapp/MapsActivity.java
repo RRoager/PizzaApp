@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.text.InputType;
 import android.util.Log;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Toast;
 

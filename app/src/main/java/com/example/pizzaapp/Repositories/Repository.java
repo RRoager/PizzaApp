@@ -26,12 +26,13 @@ import java.util.Map;
 import java.util.UUID;
 
 public class Repository {
-    private static GoogleMap mMap;
+    private static GoogleMap mGoogleMap;
     private static List<Marker> markers = new ArrayList<>();
     private static Marker currentMarker;
     private static Updatable caller;
     private static FirebaseFirestore db;
     private static FirebaseStorage storage;
+    private static UUID uuid = UUID.randomUUID(); // world-wide unique (almost)
 
     public static void init(Context context) {
         db = FirebaseFirestore.getInstance();
@@ -40,7 +41,6 @@ public class Repository {
     }
 
     public static void uploadMarker(String name, String content, double lat, double lng) {
-        UUID uuid = UUID.randomUUID(); // world-wide unique (almost)
         DocumentReference ref =  db.collection("markers").document(uuid.toString());
         Marker marker = new Marker(uuid.toString(), name, content, new GeoPoint(lat, lng));
         ref.set(marker).addOnCompleteListener(obj -> {
@@ -51,7 +51,7 @@ public class Repository {
     }
 
     public static void downloadMarker(GoogleMap googleMap) {
-        mMap = googleMap;
+        Repository.mGoogleMap = googleMap;
 
         db.collection("markers").addSnapshotListener((value,error) -> {
             if(error == null && value != null) {
@@ -62,7 +62,7 @@ public class Repository {
                         String content = "";
                         GeoPoint geoPoint = (GeoPoint) snap.get("geoPoint");
                         LatLng latLng = new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude());
-                        mMap.addMarker(new MarkerOptions()
+                        Repository.mGoogleMap.addMarker(new MarkerOptions()
                                 .position(latLng)
                                 .title(name)
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.pizza_marker)));
@@ -86,6 +86,7 @@ public class Repository {
     }
 
     public static void updateMarker(String newText, String newContent) {
+        System.out.println("Hvad er dette ID: "  + currentMarker.getId());
         currentMarker.setName(newText);
         currentMarker.setContent(newContent);
         DocumentReference ref =  db.collection("markers").document(currentMarker.getId());
