@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.text.InputType;
 import android.util.Log;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -96,6 +95,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 checkLocationPermission();
             }
         }
+        // TODO muligvis ikke nødvendig
         /*
         else {
             mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
