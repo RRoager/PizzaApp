@@ -114,8 +114,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onInfoWindowClick(@NonNull Marker marker) {
                 // TODO Få sendt marker id med
-                int i = 0;
-                Repository.setCurrentMarker(i);
+                String id = marker.getId().replaceAll("[m]","");
+                int index = Integer.parseInt(id);
+                Repository.setCurrentMarker(index);
                 Intent intent = new Intent(MapsActivity.this, ViewMarkerActivity.class);
                 startActivity(intent);
             }
