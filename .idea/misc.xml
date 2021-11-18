@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/rasmu/OneDrive/Dokumenter/Projekter/AndroidStudioProjects/PizzaApp/app/src/main/res/drawable/ic_save.xml" value="0.19270833333333334" />
+        <entry key="..\:/Users/rasmu/OneDrive/Dokumenter/Projekter/AndroidStudioProjects/PizzaApp/app/src/main/res/layout/activity_maps.xml" value="0.3164102564102564" />
+        <entry key="..\:/Users/rasmu/OneDrive/Dokumenter/Projekter/AndroidStudioProjects/PizzaApp/app/src/main/res/layout/activity_view_marker.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/rasmu/OneDrive/Dokumenter/Projekter/AndroidStudioProjects/PizzaApp/app/src/main/res/layout/content_view_marker.xml" value="0.17864583333333334" />
+        <entry key="..\:/Users/rasmu/OneDrive/Dokumenter/Projekter/AndroidStudioProjects/PizzaApp/app/src/main/res/layout/fragment_first.xml" value="0.32395833333333335" />
+        <entry key="..\:/Users/rasmu/OneDrive/Dokumenter/Projekter/AndroidStudioProjects/PizzaApp/app/src/main/res/layout/fragment_second.xml" value="0.32395833333333335" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
