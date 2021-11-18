@@ -22,7 +22,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/deleteBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/deleteButton" />
 
     <EditText
         android:id="@+id/editContent"
@@ -70,20 +70,19 @@
         android:layout_margin="16dp"
         android:backgroundTint="#b17c00"
         android:contentDescription="TODO"
-        android:onClick="saveButtonPressed"
         android:src="@drawable/ic_save"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/deleteBtn"
+        android:id="@+id/deleteButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         android:backgroundTint="#b17c00"
         android:contentDescription="TODO"
-        android:onClick="deleteButtonPressed"
+        android:onClick="saveButtonPressed"
         android:src="@drawable/ic_delete"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

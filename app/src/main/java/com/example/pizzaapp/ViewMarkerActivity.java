@@ -17,11 +17,13 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.pizzaapp.Repositories.Repository;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -31,6 +33,9 @@ public class ViewMarkerActivity extends AppCompatActivity implements Updatable {
     private EditText editName;
     private EditText editContent;
     private ImageView imageView;
+    private FloatingActionButton saveButton;
+    private FloatingActionButton deleteButton;
+    private FloatingActionButton photoButton;
     private ActivityResultLauncher<Intent> galleryLauncher;
     private ActivityResultLauncher<Intent> cameraLauncher;
 
@@ -46,6 +51,17 @@ public class ViewMarkerActivity extends AppCompatActivity implements Updatable {
         //Repository.downloadBitmapForCurrentMarker(this);
         setupGalleryLauncher();
         setupCameraLauncher();
+
+        saveButton = findViewById(R.id.saveButton);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Repository.updateMarker(editName.getText().toString(), editContent.getText().toString());
+                //Toast.makeText(this, "Marker has been saved", Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     private void setupGalleryLauncher() {
@@ -104,10 +120,12 @@ public class ViewMarkerActivity extends AppCompatActivity implements Updatable {
         cameraLauncher.launch(intent);
     }
 
+    /*
     public void saveButtonPressed(View view) {
         Repository.updateMarker(editName.getText().toString(), editContent.getText().toString());
         Toast.makeText(this, "Marker has been saved", Toast.LENGTH_SHORT).show();
     }
+    */
 
     @Override
     public void update(Object o) {

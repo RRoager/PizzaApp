@@ -44,7 +44,7 @@ public class Repository {
         DocumentReference ref =  db.collection("markers").document(uuid.toString());
         Marker marker = new Marker(uuid.toString(), name, content, new GeoPoint(lat, lng));
         ref.set(marker).addOnCompleteListener(obj -> {
-            System.out.println("added new marker");
+            System.out.println("Added new marker");
         }).addOnFailureListener(exception -> {
             System.out.println("Failed to add new marker " + exception);
         });
@@ -54,19 +54,19 @@ public class Repository {
         Repository.mGoogleMap = googleMap;
 
         db.collection("markers").addSnapshotListener((value,error) -> {
-            if(error == null && value != null) {
+            if(error == null) {
                 markers.clear();
                 for(DocumentSnapshot snap: value.getDocuments()) {
                     if(snap.get("geoPoint") != null) {
                         String name = (String) snap.get("name");
-                        String content = "";
+                        String content = (String) snap.get("content");
                         GeoPoint geoPoint = (GeoPoint) snap.get("geoPoint");
                         LatLng latLng = new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude());
                         Repository.mGoogleMap.addMarker(new MarkerOptions()
                                 .position(latLng)
                                 .title(name)
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.pizza_marker)));
-                        Marker marker = new Marker(name, content, geoPoint);
+                        Marker marker = new Marker(snap.getId(), name, content, geoPoint);
                         markers.add(marker);
                     }
                 }
@@ -85,19 +85,17 @@ public class Repository {
         Repository.currentMarker = markers.get(index);
     }
 
-    public static void updateMarker(String newText, String newContent) {
+    public static void updateMarker(String newName, String newContent) {
         System.out.println("Hvad er dette ID: "  + currentMarker.getId());
-        currentMarker.setName(newText);
+        currentMarker.setName(newName);
         currentMarker.setContent(newContent);
-        DocumentReference ref =  db.collection("markers").document(currentMarker.getId());
-        Map<String,String> map = new HashMap<>();
-        map.put("title", currentMarker.getName());
-        map.put("content", currentMarker.getContent());
+        DocumentReference ref = db.collection("markers").document(currentMarker.getId());
         if(currentMarker.hasNewImage()) {
             uploadBitmapToCurrentMarker(currentMarker.getBitmap());
         }
-        ref.set(map).addOnCompleteListener(obj -> {
-            System.out.println("updated marker");
+        // ref.update only updates the mentioned field, were as ref.set removes everything not mentioned
+        ref.update("name", currentMarker.getName(), "content", currentMarker.getContent()).addOnCompleteListener(obj -> {
+            System.out.println("Updated marker");
         }).addOnFailureListener(exception -> {
             System.out.println("Failed to update marker " + exception);
         });
