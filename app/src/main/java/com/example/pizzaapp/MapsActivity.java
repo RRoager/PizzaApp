@@ -1,6 +1,7 @@
 package com.example.pizzaapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
@@ -113,15 +114,50 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         mGoogleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onInfoWindowClick(@NonNull Marker marker) {
-                String id = marker.getId().replace("m","");
-                int index = Integer.parseInt(id);
-                Repository.setCurrentMarker(index);
+                Repository.setCurrentMarker(marker.getTitle());
                 Intent intent = new Intent(MapsActivity.this, ViewMarkerActivity.class);
                 startActivity(intent);
             }
         });
+    }
+
+    public void createLongPressedMarker(@NonNull LatLng latLng) {
+        // Init the dialog object
+        AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
+        builder.setTitle("Skriv stedets navn:");
+
+        // Set up the input
+        final EditText input = new EditText(MapsActivity.this);
+
+        // Specify the type of input expected
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        builder.setView(input);
+
+        // Set up the buttons
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String name = input.getText().toString();
+                String content = "";
+
+                mGoogleMap.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .title(name)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.pizza_marker)));
+
+                Repository.uploadMarker(name, content, latLng.latitude, latLng.longitude);
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
     }
 
     LocationCallback mLocationCallback = new LocationCallback() {
@@ -200,42 +236,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
             }
         }
-    }
-
-    public void createLongPressedMarker(@NonNull LatLng latLng) {
-        // Init the dialog object
-        AlertDialog.Builder builder = new AlertDialog.Builder(MapsActivity.this);
-        builder.setTitle("Skriv stedets navn:");
-
-        // Set up the input
-        final EditText input = new EditText(MapsActivity.this);
-
-        // Specify the type of input expected
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        builder.setView(input);
-
-        // Set up the buttons
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String name = input.getText().toString();
-                String content = "";
-
-                mGoogleMap.addMarker(new MarkerOptions()
-                        .position(latLng)
-                        .title(name)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.pizza_marker)));
-
-                Repository.uploadMarker(name, content, latLng.latitude, latLng.longitude);
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        builder.show();
     }
 
     @Override

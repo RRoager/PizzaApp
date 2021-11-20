@@ -3,6 +3,9 @@ package com.example.pizzaapp.Repositories;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 
 import com.example.pizzaapp.R;
 import com.example.pizzaapp.Updatable;
@@ -22,6 +25,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Repository {
     private static GoogleMap mGoogleMap;
@@ -42,6 +46,7 @@ public class Repository {
         DocumentReference ref = db.collection("markers").document(uuid.toString());
         Marker marker = new Marker(uuid.toString(), name, content, new GeoPoint(lat, lng));
         ref.set(marker).addOnCompleteListener(obj -> {
+            //markers.add(marker);
             System.out.println("Added new marker: " + marker.getId());
         }).addOnFailureListener(exception -> {
             System.out.println("Failed to add new marker " + exception);
@@ -79,11 +84,13 @@ public class Repository {
         return currentMarker;
     }
 
-
-    /* TODO fix IndexOutOfBoundsException når der laves en ny marker og den tilgåes,
-        det er noget med det index der bliver sendt med fra MapsActivity */
-    public static void setCurrentMarker(int index) {
-        Repository.currentMarker = markers.get(index);
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static void setCurrentMarker(String name) {
+        List<Marker> result = markers.stream()
+                .filter(item -> item.getName().equals(name))
+                .collect(Collectors.toList());
+        System.out.println("Hvad er result: " + result.get(0).getName());
+        Repository.currentMarker = result.get(0);
     }
 
     public static void updateMarker(String newName, String newContent) {
@@ -127,7 +134,7 @@ public class Repository {
             currentMarker.setBitmap(bitmap);
             caller.update(true);
         }).addOnFailureListener(exception -> {
-            System.out.println("No bitmap in DB for this note");
+            System.out.println("No bitmap in DB for this marker");
         });
     }
 }
