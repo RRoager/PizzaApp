@@ -225,13 +225,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (ContextCompat.checkSelfPermission(this,
                         Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
-
                     mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
                     mGoogleMap.setMyLocationEnabled(true);
                 }
-
             } else {
-
                 // Permission denied, disable the functionality that depends on this permission.
                 Toast.makeText(this, "permission denied", Toast.LENGTH_LONG).show();
             }

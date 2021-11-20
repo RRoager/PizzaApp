@@ -28,7 +28,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class Repository {
-    private static GoogleMap mGoogleMap;
     private static List<Marker> markers = new ArrayList<>();
     private static Marker currentMarker;
     private static Updatable caller;
@@ -46,7 +45,6 @@ public class Repository {
         DocumentReference ref = db.collection("markers").document(uuid.toString());
         Marker marker = new Marker(uuid.toString(), name, content, new GeoPoint(lat, lng));
         ref.set(marker).addOnCompleteListener(obj -> {
-            //markers.add(marker);
             System.out.println("Added new marker: " + marker.getId());
         }).addOnFailureListener(exception -> {
             System.out.println("Failed to add new marker " + exception);
@@ -54,8 +52,6 @@ public class Repository {
     }
 
     public static void downloadMarker(GoogleMap googleMap) {
-        Repository.mGoogleMap = googleMap;
-
         db.collection("markers").addSnapshotListener((value,error) -> {
             if(error == null) {
                 markers.clear();
@@ -65,7 +61,7 @@ public class Repository {
                         String content = (String) snap.get("content");
                         GeoPoint geoPoint = (GeoPoint) snap.get("geoPoint");
                         LatLng latLng = new LatLng(geoPoint.getLatitude(), geoPoint.getLongitude());
-                        Repository.mGoogleMap.addMarker(new MarkerOptions()
+                        googleMap.addMarker(new MarkerOptions()
                                 .position(latLng)
                                 .title(name)
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.pizza_marker)));
