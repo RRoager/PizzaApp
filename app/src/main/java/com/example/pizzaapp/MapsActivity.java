@@ -42,11 +42,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mGoogleMap;
     private ActivityMapsBinding binding;
-    SupportMapFragment mapFrag;
-    LocationRequest mLocationRequest;
-    Location mLastLocation;
-    Marker mCurrLocationMarker;
-    FusedLocationProviderClient mFusedLocationClient;
+    private SupportMapFragment mapFrag;
+    private LocationRequest mLocationRequest;
+    private Location mLastLocation;
+    private Marker mCurrLocationMarker;
+    private FusedLocationProviderClient mFusedLocationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onPause() {
         super.onPause();
 
-        //stop location updates when Activity is no longer active
+        // Stop location updates when Activity is no longer active
         if (mFusedLocationClient != null) {
             mFusedLocationClient.removeLocationUpdates(mLocationCallback);
         }
@@ -96,13 +96,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 checkLocationPermission();
             }
         }
-        // TODO muligvis ikke nødvendig
-        /*
-        else {
-            mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
-            mGoogleMap.setMyLocationEnabled(true);
-        }
-        */
 
         Repository.downloadMarker(mGoogleMap);
 
