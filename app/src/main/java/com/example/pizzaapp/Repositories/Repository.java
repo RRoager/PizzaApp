@@ -82,6 +82,7 @@ public class Repository {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static void setCurrentMarker(String name) {
+        // Creates a result list with only one marker object based on the name
         List<Marker> result = markers.stream()
                 .filter(item -> item.getName().equals(name))
                 .collect(Collectors.toList());
@@ -90,7 +91,6 @@ public class Repository {
     }
 
     public static void updateMarker(String newName, String newContent) {
-        System.out.println("Hvad er dette ID: "  + currentMarker.getId());
         currentMarker.setName(newName);
         currentMarker.setContent(newContent);
         DocumentReference ref = db.collection("markers").document(currentMarker.getId());

@@ -97,6 +97,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
 
+        // Downloads all markers and displays them on map
         Repository.downloadMarker(mGoogleMap);
 
         mGoogleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
@@ -110,6 +111,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onInfoWindowClick(@NonNull Marker marker) {
+
+                // Get the title from the selected marker and uses it to set the current marker
                 Repository.setCurrentMarker(marker.getTitle());
                 Intent intent = new Intent(MapsActivity.this, ViewMarkerActivity.class);
                 startActivity(intent);
@@ -156,6 +159,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     LocationCallback mLocationCallback = new LocationCallback() {
         @Override
         public void onLocationResult(LocationResult locationResult) {
+
             List<Location> locationList = locationResult.getLocations();
             if (locationList.size() > 0) {
                 // The last location in the list is the newest
